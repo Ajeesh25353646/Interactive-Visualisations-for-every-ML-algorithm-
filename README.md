@@ -6,7 +6,7 @@ Interactive visualizations for understanding Machine Learning algorithms — fro
 
 ## 🚀 Live Demo
 
-**Linear Regression** — [View Live](YOUR_ACTUAL_URL_HERE)
+**Linear Regression** — [View Live](https://linear--regression.streamlit.app/)
 
 ---
 
