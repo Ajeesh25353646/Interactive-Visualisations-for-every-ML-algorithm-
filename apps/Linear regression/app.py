@@ -4,8 +4,6 @@ import pandas as pd
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
 
-st.set_page_config(page_title="Linear Regression Visualizer", layout="wide")
-
 st.title("📈 Mastering Linear Regression: From Intuition to Interview")
 
 # --- Introduction ---
@@ -36,7 +34,7 @@ with st.sidebar:
     st.subheader("🔬 Advanced Topics")
     st.markdown("Want to master OLS assumptions?")
     if st.button("📊 OLS Assumptions Diagnostic", use_container_width=True, key="adv_sidebar", help="Check homoscedasticity, normality, VIF, and autocorrelation"):
-        st.switch_page("pages/2_🔬_OLS_Assumptions.py")
+        st.switch_page("pages/3_OLS_Assumptions.py")
 
 # --- Data Generation ---
 np.random.seed(42)
@@ -188,4 +186,4 @@ Check out the **OLS Assumptions Diagnostic** page (in sidebar ↑) for interacti
 col_back1, col_back2, col_back3 = st.columns([1, 2, 1])
 with col_back2:
     if st.button("🔬 Open Advanced Diagnostics", use_container_width=True, key="adv_footer"):
-        st.switch_page("pages/2_🔬_OLS_Assumptions.py")
+        st.switch_page("pages/3_OLS_Assumptions.py")
