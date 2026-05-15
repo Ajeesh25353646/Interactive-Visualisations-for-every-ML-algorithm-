@@ -7,7 +7,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-st.markdown("""
+st.html("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@400;500;600;700;800&display=swap');
 
@@ -15,14 +17,15 @@ st.markdown("""
     --bg-primary: #13161B;
     --bg-card: #1A1E26;
     --bg-card-hover: #212631;
-    --accent-1: #7C65C1;
-    --accent-2: #818CF8;
+    --accent-1: #8B5CF6;
+    --accent-2: #A78BFA;
     --accent-green: #34D399;
+    --accent-warm: #F59E0B;
     --text-primary: #F1F5F9;
-    --text-muted: #94A3B8;
-    --text-dim: #64748B;
-    --border: #2A2F3A;
-    --border-hover: #7C65C1;
+    --text-muted: #9CAAC5;
+    --text-dim: #7885A0;
+    --border: #2E3440;
+    --border-hover: #8B5CF6;
     --font-display: 'Syne', sans-serif;
     --font-body: 'DM Sans', sans-serif;
 }
@@ -35,7 +38,7 @@ st.markdown("""
 .st-emotion-cache-1qprp7y {
     display: none !important;
 }
-section[data-testid="stSidebar"] { display: none !important; }
+section[data-testid="stSidebar"], .stSidebar, .css-1d391kg, [data-testid="stSidebarContent"] { display: none !important; }
 .st-emotion-cache-1wmy9hl, .st-emotion-cache-1oe6wy8 { display: none !important; }
 
 .stApp, .main, .block-container {
@@ -67,7 +70,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 }
 
 .hero {
-    position: relative; min-height: 85vh; display: flex;
+    position: relative; min-height: 75vh; display: flex;
     align-items: center; justify-content: center; text-align: center;
     overflow: hidden; padding: 0 24px;
 }
@@ -93,18 +96,18 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 }
 .hero-content { position: relative; z-index: 1; max-width: 900px; }
 .hero-title {
-    font-family: var(--font-display); font-weight: 800;
-    font-size: clamp(36px, 6vw, 72px); line-height: 1.1;
-    margin: 0 0 8px 0; color: var(--text-primary);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(28px, 4.5vw, 56px); line-height: 1.15;
+    margin: 0 0 4px 0; color: var(--text-primary);
 }
-.hero-title:last-of-type { margin-bottom: 24px; }
+.hero-title:last-of-type { margin-bottom: 16px; }
 .gradient-text {
     background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-subtitle {
-    font-size: clamp(16px, 2vw, 20px); color: var(--text-muted);
-    line-height: 1.6; margin-bottom: 40px; max-width: 650px;
+    font-size: clamp(15px, 1.6vw, 18px); color: var(--text-muted);
+    line-height: 1.5; margin-bottom: 32px; max-width: 580px;
     margin-left: auto; margin-right: auto;
 }
 .hero-cta {
@@ -162,48 +165,9 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     background: rgba(107,114,128,0.1); color: var(--text-muted);
     border: 1px solid rgba(107,114,128,0.2);
 }
-.card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 12px; }
+.card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 12px; }
 
-.stPageLink {
-    background: transparent !important;
-    border: 1px solid var(--border) !important; border-radius: 8px !important;
-    color: var(--accent-2) !important; font-family: var(--font-body) !important;
-    font-size: 14px !important; font-weight: 500 !important;
-    transition: all 0.2s ease !important; text-decoration: none !important;
-    width: 100% !important; justify-content: center !important;
-}
-.stPageLink:hover {
-    border-color: var(--accent-1) !important;
-    background: rgba(124,101,193,0.1) !important;
-}
-
-.stPageLink {
-    background: var(--bg-card) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 16px !important;
-    padding: 28px 24px !important;
-    height: auto !important;
-    min-height: 160px !important;
-    white-space: pre-line !important;
-    text-align: left !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    transition: all 0.3s ease !important;
-    text-decoration: none !important;
-    color: var(--text-primary) !important;
-    width: 100% !important;
-    margin-bottom: 16px !important;
-    font-family: var(--font-body) !important;
-}
-.stPageLink:hover {
-    background: var(--bg-card-hover) !important;
-    border-color: var(--border-hover) !important;
-    transform: translateY(-4px) !important;
-    box-shadow: 0 8px 40px rgba(124,101,193,0.15) !important;
-}
-.stPageLink p { margin: 0 !important; }
-.st-emotion-cache-1xarl3l { display: none !important; }
+.card-link { text-decoration: none; color: inherit; display: block; border-radius: 16px; margin-bottom: 16px; transition: all 0.3s ease; } .card-link:hover .viz-card { background: var(--bg-card-hover) !important; border-color: var(--border-hover) !important; transform: translateY(-4px) !important; box-shadow: 0 8px 40px rgba(124,101,193,0.15) !important; } .st-emotion-cache-1xarl3l, .st-emotion-cache-15hul8a { display: none !important; }
 
 .coming-soon-placeholder {
     text-align: center; color: var(--text-dim); font-size: 13px;
@@ -225,7 +189,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     font-family: var(--font-display); font-weight: 600;
     font-size: 17px; color: var(--text-primary); margin-bottom: 8px;
 }
-.feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
 
 .cta-section { text-align: center; padding: 80px 48px; border-top: 1px solid var(--border); }
 .cta-title {
@@ -249,6 +213,26 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 .footer-hiring { margin-top: 12px; font-size: 15px; color: var(--text-muted); }
 .footer-hiring a { color: var(--accent-2) !important; font-weight: 600; }
 
+/* ─── CARD ENTRY ANIMATION ─── */
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.viz-card, .card-link {
+    animation: cardFadeIn 0.4s ease forwards;
+}
+
+[data-testid="column"]:nth-child(1) .card-link,
+[data-testid="column"]:nth-child(1) .viz-card { animation-delay: 0.05s; }
+[data-testid="column"]:nth-child(2) .card-link,
+[data-testid="column"]:nth-child(2) .viz-card { animation-delay: 0.10s; }
+[data-testid="column"]:nth-child(3) .card-link,
+[data-testid="column"]:nth-child(3) .viz-card { animation-delay: 0.15s; }
+
+/* ─── DECORATIVE SECTION ART ─── */
+.section-art { display: block; margin: 0 auto 16px; }
+
 @media (max-width: 768px) {
     .top-nav { padding: 16px 24px; flex-direction: column; gap: 12px; }
     .section-wrapper { padding: 0 16px 24px; }
@@ -258,15 +242,15 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     .footer { padding: 24px; }
 }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 st.markdown("""
 <div class="top-nav">
     <div class="nav-brand">🎯 ML Visualized</div>
     <div class="nav-links">
-        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
-        <a href="mailto:youremail@example.com" class="nav-cta">Hiring? Let's Talk</a>
+        <a href="https://github.com/Ajeesh25353646" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/ajeeshgarg" target="_blank">LinkedIn</a>
+        <a href="mailto:gargajeesh@gmail.com" class="nav-cta">Hiring? Let's Talk</a>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -275,8 +259,8 @@ st.markdown("""
 <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-        <h1 class="hero-title">See <span class="gradient-text">ML</span>. Understand <span class="gradient-text">ML</span>.</h1>
-        <h1 class="hero-title">Ace the Interview.</h1>
+        <div class="hero-title">See <span class="gradient-text">ML</span>. Understand <span class="gradient-text">ML</span>.</div>
+        <div class="hero-title">Ace the Interview.</div>
         <p class="hero-subtitle">
             Interactive visualizations for every core ML concept — from Regularization to Transformers.<br>
             Tweak parameters, see algorithms respond in real-time. No signup. Free.
@@ -290,6 +274,17 @@ st.markdown('<div id="explore" class="section-title">Explore Algorithms</div>', 
 
 # ─── CORE ML ───
 st.markdown('<div class="section-wrapper">', unsafe_allow_html=True)
+st.markdown("""
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+</svg>
+""", unsafe_allow_html=True)
 st.markdown('<div class="category-label">Core ML</div>', unsafe_allow_html=True)
 
 core_apps = [
@@ -334,6 +329,17 @@ for i, (icon, name, status, desc) in enumerate(core_apps[3:]):
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── SUPERVISED ───
+st.markdown("""
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+</svg>
+""", unsafe_allow_html=True)
 st.markdown('<div class="category-label" style="margin-top: 32px;">Supervised Learning</div>', unsafe_allow_html=True)
 
 supervised_apps = [
@@ -347,11 +353,7 @@ r3 = st.columns(3)
 for i, (icon, name, status, desc) in enumerate(supervised_apps[:3]):
     with r3[i]:
         if status == "live":
-            st.markdown(f"""
-            <a href="/1_Linear_Regression" class="card-link">
-            <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">● Live</div><div class="card-desc">{desc}</div></div>
-            </a>
-            """, unsafe_allow_html=True)
+            st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
             <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
@@ -362,11 +364,7 @@ r4 = st.columns(3)
 with r4[0]:
     icon, name, status, desc = supervised_apps[3]
     if status == "live":
-        st.markdown(f"""
-        <a href="/1_Linear_Regression" class="card-link">
-        <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">● Live</div><div class="card-desc">{desc}</div></div>
-        </a>
-        """, unsafe_allow_html=True)
+        st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
     else:
         st.markdown(f"""
         <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
@@ -374,6 +372,17 @@ with r4[0]:
         st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── ADVANCED ───
+st.markdown("""
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+</svg>
+""", unsafe_allow_html=True)
 st.markdown('<div class="category-label" style="margin-top: 32px;">Deep Learning & Advanced</div>', unsafe_allow_html=True)
 
 advanced_apps = [
@@ -390,7 +399,7 @@ r5 = st.columns(3)
 for i, (icon, name, status, desc) in enumerate(advanced_apps[:3]):
     with r5[i]:
         if status == "live":
-            st.markdown(f"""<a href="/1_Linear_Regression" class="card-link"><div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">● Live</div><div class="card-desc">{desc}</div></div></a>""", unsafe_allow_html=True)
+            st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
@@ -399,7 +408,7 @@ r6 = st.columns(3)
 for i, (icon, name, status, desc) in enumerate(advanced_apps[3:6]):
     with r6[i]:
         if status == "live":
-            st.markdown(f"""<a href="/1_Linear_Regression" class="card-link"><div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">● Live</div><div class="card-desc">{desc}</div></div></a>""", unsafe_allow_html=True)
+            st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
@@ -408,7 +417,7 @@ r7 = st.columns(3)
 with r7[0]:
     icon, name, status, desc = advanced_apps[6]
     if status == "live":
-        st.markdown(f"""<a href="/1_Linear_Regression" class="card-link"><div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">● Live</div><div class="card-desc">{desc}</div></div></a>""", unsafe_allow_html=True)
+        st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
     else:
         st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
         st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
@@ -447,10 +456,10 @@ st.markdown("""
 st.markdown("""
 <div class="cta-section">
     <h2 class="cta-title">Ready to see ML like never before?</h2>
-    <p class="cta-subtitle">Start with Regularization — more visualizations added every week.</p>
+    <p class="cta-subtitle">Start with Linear Regression — more visualizations added every week.</p>
     <div class="cta-buttons">
         <a href="#explore" class="hero-cta">Explore Algorithms →</a>
-        <a href="https://github.com/yourusername" target="_blank" class="cta-secondary">Star on GitHub</a>
+        <a href="https://github.com/Ajeesh25353646/Interactive-Visualisations-for-every-ML-algorithm-" target="_blank" class="cta-secondary">Star on GitHub</a>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -459,7 +468,7 @@ st.markdown("""
 st.markdown("""
 <div class="footer">
     <p>Built with Python, Streamlit, D3.js, and ☕</p>
-    <p><a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a> · <a href="https://github.com/yourusername" target="_blank">GitHub</a></p>
-    <p class="footer-hiring"><strong>Hiring an ML Engineer?</strong> <a href="mailto:youremail@example.com">Let's talk →</a></p>
+    <p><a href="https://linkedin.com/in/ajeeshgarg" target="_blank">LinkedIn</a> · <a href="https://github.com/Ajeesh25353646" target="_blank">GitHub</a></p>
+    <p class="footer-hiring"><strong>Hiring an ML Engineer?</strong> <a href="mailto:gargajeesh@gmail.com">Let's talk →</a></p>
 </div>
 """, unsafe_allow_html=True)
