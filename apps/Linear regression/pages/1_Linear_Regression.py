@@ -5,11 +5,7 @@ import plotly.graph_objects as go
 from scipy import stats
 from sklearn.linear_model import LinearRegression
 
-st.set_page_config(
-    page_title="OLS Assumptions Diagnostic",
-    page_icon="🔬",
-    layout="wide"
-)
+
 
 st.title("🔬 Linear Regression: OLS Assumptions Diagnostic")
 
@@ -34,12 +30,7 @@ For Linear Regression to produce valid, reliable results, five key assumptions m
 st.divider()
 
 # Navigation
-col1, col2 = st.columns([3, 1])
-with col1:
-    st.markdown("### Choose a Diagnostic Tool")
-with col2:
-    if st.button("← Back to Basics", use_container_width=True, key="back_btn"):
-        st.switch_page("app.py")
+st.markdown("### Choose a Diagnostic Tool")
 
 st.divider()
 
