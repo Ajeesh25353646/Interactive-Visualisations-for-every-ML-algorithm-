@@ -52,3 +52,6 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+
+# Docs (ephemeral working plans)
+docs/

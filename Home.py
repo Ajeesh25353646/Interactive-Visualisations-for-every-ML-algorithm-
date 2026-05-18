@@ -116,7 +116,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     color: white !important; text-decoration: none !important;
     font-family: var(--font-display); font-weight: 600; font-size: 16px;
     padding: 16px 40px; border-radius: 12px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 0 30px rgba(124,101,193,0.2);
 }
 .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,101,193,0.4); }
@@ -140,7 +140,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 .viz-card {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: 16px; padding: 28px 24px;
-    transition: all 0.3s ease; height: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; height: 100%;
     display: flex; flex-direction: column;
     margin-bottom: 16px;
 }
@@ -167,7 +167,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 }
 .card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 12px; }
 
-.card-link { text-decoration: none; color: inherit; display: block; border-radius: 16px; margin-bottom: 16px; transition: all 0.3s ease; } .card-link:hover .viz-card { background: var(--bg-card-hover) !important; border-color: var(--border-hover) !important; transform: translateY(-4px) !important; box-shadow: 0 8px 40px rgba(124,101,193,0.15) !important; } .st-emotion-cache-1xarl3l, .st-emotion-cache-15hul8a { display: none !important; }
+.card-link { text-decoration: none; color: inherit; display: block; border-radius: 16px; margin-bottom: 16px; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; } .card-link:hover .viz-card { background: var(--bg-card-hover) !important; border-color: var(--border-hover) !important; transform: translateY(-4px) !important; box-shadow: 0 8px 40px rgba(124,101,193,0.15) !important; } .st-emotion-cache-1xarl3l, .st-emotion-cache-15hul8a { display: none !important; }
 
 .coming-soon-placeholder {
     text-align: center; color: var(--text-dim); font-size: 13px;
@@ -203,7 +203,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     color: var(--text-primary) !important; text-decoration: none !important;
     font-family: var(--font-display); font-weight: 600; font-size: 16px;
     padding: 16px 40px; border-radius: 12px;
-    border: 1px solid var(--border); transition: all 0.2s;
+    border: 1px solid var(--border); transition: border-color 0.2s, background 0.2s;
 }
 .cta-secondary:hover { border-color: var(--accent-1); background: rgba(124,101,193,0.05); }
 
