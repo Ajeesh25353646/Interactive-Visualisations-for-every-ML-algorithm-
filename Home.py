@@ -182,6 +182,8 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     text-align: center; color: var(--text-dim); font-size: 13px;
     padding: 10px; border: 1px dashed var(--border); border-radius: 8px; margin-top: auto;
 }
+.viz-card.coming-soon { opacity: 0.5; }
+.viz-card.coming-soon:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
 
 .features-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -345,7 +347,7 @@ for i, (icon, name, status, page, desc) in enumerate(core_apps[:3]):
             st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
-            <div class="viz-card">
+            <div class="viz-card coming-soon">
                 <div class="card-icon">{icon}</div>
                 <div class="card-title">{name}</div>
                 <div class="card-badge {status}">○ Coming Soon</div>
@@ -361,7 +363,7 @@ for i, (icon, name, status, page, desc) in enumerate(core_apps[3:]):
             st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
-            <div class="viz-card">
+            <div class="viz-card coming-soon">
                 <div class="card-icon">{icon}</div>
                 <div class="card-title">{name}</div>
                 <div class="card-badge {status}">○ Coming Soon</div>
@@ -377,7 +379,7 @@ for i, (icon, name, status, desc) in enumerate(core_apps[3:]):
             st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
-            <div class="viz-card">
+            <div class="viz-card coming-soon">
                 <div class="card-icon">{icon}</div>
                 <div class="card-title">{name}</div>
                 <div class="card-badge {status}">○ Coming Soon</div>
@@ -413,7 +415,7 @@ for i, (icon, name, status, page, desc) in enumerate(supervised_apps):
             st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
-            <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
+            <div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
             """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
@@ -439,7 +441,7 @@ r_unsup = st.columns(3)
 with r_unsup[0]:
     icon, name, status, page, desc = unsupervised_apps[0]
     st.markdown(f"""
-    <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
+    <div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
     """, unsafe_allow_html=True)
     st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
@@ -473,7 +475,7 @@ for i, (icon, name, status, page, desc) in enumerate(advanced_apps[:3]):
         if status == "live":
             st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
-            st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r6 = st.columns(3)
@@ -482,7 +484,7 @@ for i, (icon, name, status, page, desc) in enumerate(advanced_apps[3:6]):
         if status == "live":
             st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
-            st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r7 = st.columns(3)
@@ -491,7 +493,7 @@ with r7[0]:
     if status == "live":
         st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
     else:
-        st.markdown(f"""<div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
+        st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
         st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
