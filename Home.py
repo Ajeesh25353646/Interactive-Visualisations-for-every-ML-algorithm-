@@ -241,6 +241,14 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     .cta-section { padding: 48px 16px; }
     .footer { padding: 24px; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg::before { animation: none !important; }
+  .viz-card, .card-link { animation: none !important; }
+  .hero-cta:hover { transform: none !important; }
+  .viz-card:hover { transform: none !important; }
+  .card-link:hover .viz-card { transform: none !important !important; }
+}
 </style>
 """)
 
