@@ -388,11 +388,10 @@ supervised_apps = [
     ("🏷️", "Classification", "coming-soon", "KNN, SVM, Naive Bayes — decision boundary explorer with live comparison."),
     ("🌲", "Random Forest", "coming-soon", "Gini vs Entropy, tree explorer, ensemble demo with OOB error."),
     ("📈", "Gradient Boosting", "coming-soon", "Residual learning step-by-step. XGBoost vs LightGBM vs CatBoost."),
-    ("🔮", "Clustering Algorithms", "coming-soon", "DBSCAN, Hierarchical, GMM — compare algorithms on the same dataset."),
 ]
 
 r3 = st.columns(3)
-for i, (icon, name, status, desc) in enumerate(supervised_apps[:3]):
+for i, (icon, name, status, desc) in enumerate(supervised_apps):
     with r3[i]:
         if status == "live":
             st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
@@ -401,6 +400,32 @@ for i, (icon, name, status, desc) in enumerate(supervised_apps[:3]):
             <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
             """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
+
+# ─── UNSUPERVISED ───
+st.markdown("""
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
+    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+</svg>
+""", unsafe_allow_html=True)
+st.markdown('<div class="category-label" style="margin-top: 32px;">Unsupervised Learning</div>', unsafe_allow_html=True)
+
+unsupervised_apps = [
+    ("", "Clustering Algorithms", "coming-soon", "DBSCAN, Hierarchical, GMM — compare algorithms on the same dataset."),
+]
+
+r_unsup = st.columns(3)
+with r_unsup[0]:
+    icon, name, status, desc = unsupervised_apps[0]
+    st.markdown(f"""
+    <div class="viz-card"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
+    """, unsafe_allow_html=True)
+    st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r4 = st.columns(3)
 with r4[0]:
