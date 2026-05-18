@@ -28,6 +28,7 @@ st.html("""
     --border-hover: #8B5CF6;
     --font-display: 'Syne', sans-serif;
     --font-body: 'DM Sans', sans-serif;
+    color-scheme: dark;
 }
 
 #MainMenu, header, footer, .stAppDeployButton,
