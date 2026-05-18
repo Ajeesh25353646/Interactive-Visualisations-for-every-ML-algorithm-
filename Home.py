@@ -265,14 +265,14 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 """)
 
 st.markdown("""
-<div class="top-nav">
+<nav class="top-nav" aria-label="Main navigation">
     <div class="nav-brand">🎯 ML Visualized</div>
     <div class="nav-links">
         <a href="https://github.com/Ajeesh25353646" target="_blank">GitHub</a>
         <a href="https://linkedin.com/in/ajeeshgarg" target="_blank">LinkedIn</a>
         <a href="mailto:gargajeesh@gmail.com" class="nav-cta">Hiring? Let's Talk</a>
     </div>
-</div>
+</nav>
 """, unsafe_allow_html=True)
 
 st.markdown("""
