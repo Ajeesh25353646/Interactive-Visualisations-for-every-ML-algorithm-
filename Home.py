@@ -268,8 +268,8 @@ st.markdown("""
 <nav class="top-nav" aria-label="Main navigation">
     <div class="nav-brand">🎯 ML Visualized</div>
     <div class="nav-links">
-        <a href="https://github.com/Ajeesh25353646" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/ajeeshgarg" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Ajeesh25353646" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/ajeeshgarg" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="mailto:gargajeesh@gmail.com" class="nav-cta">Hiring? Let's Talk</a>
     </div>
 </nav>
@@ -479,7 +479,7 @@ st.markdown("""
     <p class="cta-subtitle">Start with Linear Regression — more visualizations added every week.</p>
     <div class="cta-buttons">
         <a href="#explore" class="hero-cta">Explore Algorithms →</a>
-        <a href="https://github.com/Ajeesh25353646/Interactive-Visualisations-for-every-ML-algorithm-" target="_blank" class="cta-secondary">Star on GitHub</a>
+        <a href="https://github.com/Ajeesh25353646/Interactive-Visualisations-for-every-ML-algorithm-" target="_blank" rel="noopener noreferrer" class="cta-secondary">Star on GitHub</a>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -488,7 +488,7 @@ st.markdown("""
 st.markdown("""
 <div class="footer">
     <p>Built with Python, Streamlit, D3.js, and ☕</p>
-    <p><a href="https://linkedin.com/in/ajeeshgarg" target="_blank">LinkedIn</a> · <a href="https://github.com/Ajeesh25353646" target="_blank">GitHub</a></p>
+    <p><a href="https://linkedin.com/in/ajeeshgarg" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="https://github.com/Ajeesh25353646" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     <p class="footer-hiring"><strong>Hiring an ML Engineer?</strong> <a href="mailto:gargajeesh@gmail.com">Let's talk →</a></p>
 </div>
 """, unsafe_allow_html=True)
