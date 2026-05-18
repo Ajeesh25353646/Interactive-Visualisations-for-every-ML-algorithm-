@@ -295,7 +295,7 @@ st.markdown('<div id="explore" class="section-title">Explore Algorithms</div>', 
 # ─── CORE ML ───
 st.markdown('<div class="section-wrapper">', unsafe_allow_html=True)
 st.markdown("""
-<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
     <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
@@ -350,7 +350,7 @@ for i, (icon, name, status, desc) in enumerate(core_apps[3:]):
 
 # ─── SUPERVISED ───
 st.markdown("""
-<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
     <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
@@ -393,7 +393,7 @@ with r4[0]:
 
 # ─── ADVANCED ───
 st.markdown("""
-<svg class="section-art" viewBox="0 0 120 24" width="120" height="24">
+<svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
     <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
     <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
