@@ -31,6 +31,14 @@ st.html("""
     color-scheme: dark;
 }
 
+.skip-link {
+  position: absolute; top: -100%; left: 50%; transform: translateX(-50%);
+  z-index: 9999; padding: 8px 16px; background: var(--accent-1); color: white;
+  border-radius: 0 0 8px 8px; font-family: var(--font-body); font-size: 14px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
 #MainMenu, header, footer, .stAppDeployButton,
 .stActionButton, .viewerBadge_container__1QSob,
 .stToolbar, .stDecoration, .stAppToolbar,
@@ -265,6 +273,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 """)
 
 st.markdown("""
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <nav class="top-nav" aria-label="Main navigation">
     <div class="nav-brand">🎯 ML Visualized</div>
     <div class="nav-links">
@@ -278,7 +287,7 @@ st.markdown("""
 st.markdown("""
 <div class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-content">
+    <div class="hero-content" id="main-content">
         <div class="hero-title">See <span class="gradient-text">ML</span>. Understand <span class="gradient-text">ML</span>.</div>
         <div class="hero-title">Ace the Interview.</div>
         <p class="hero-subtitle">
