@@ -249,6 +249,17 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
   .viz-card:hover { transform: none !important; }
   .card-link:hover .viz-card { transform: none !important !important; }
 }
+
+:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}
+.nav-links a:focus-visible, .hero-cta:focus-visible, .cta-secondary:focus-visible,
+.footer a:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 </style>
 """)
 
