@@ -270,6 +270,19 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
   border-radius: 4px;
 }
 </style>
+<script>
+(function() {
+  var handler = function(e) {
+    var href = e.target.closest('a')?.getAttribute('href');
+    if (href === '#explore') {
+      e.preventDefault();
+      var el = document.getElementById('explore');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  document.addEventListener('click', handler, true);
+})();
+</script>
 """)
 
 st.markdown("""
