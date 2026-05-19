@@ -506,7 +506,9 @@ with tab3:
         lambda x: '✅ OK' if x < 5 else '⚠️ Moderate' if x < 10 else '❌ Severe'
     )
     
-    st.dataframe(vif_df_styled.style.format({'VIF': '{:.3f}'}), use_container_width=True, height=200)
+    vif_df_styled['VIF'] = vif_df_styled['VIF'].round(3)
+    
+    st.dataframe(vif_df_styled, use_container_width=True, height=200)
     
     # --- NEW: Coefficient Stability Demo ---
     st.divider()
@@ -535,19 +537,19 @@ with tab3:
             'Change (%)': ((coef2 - coef1) / np.abs(coef1)) * 100
         }).set_index('Feature')
         
+        stab_df['Original Coef'] = stab_df['Original Coef'].round(3)
+        stab_df['Noisy Coef'] = stab_df['Noisy Coef'].round(3)
+        stab_df['Change (%)'] = stab_df['Change (%)'].round(1).map('{:+.1f}%'.format)
+        
         col_s1, col_s2 = st.columns([1.2, 0.8])
         with col_s1:
             st.write("**Coefficient Comparison**")
             st.dataframe(
-                stab_df.style.format({
-                    'Original Coef': '{:.3f}', 
-                    'Noisy Coef': '{:.3f}', 
-                    'Change (%)': '{:+.1f}%'
-                }),
+                stab_df,
                 column_config={
                     "Original Coef": st.column_config.NumberColumn(width="medium"),
                     "Noisy Coef": st.column_config.NumberColumn(width="medium"),
-                    "Change (%)": st.column_config.NumberColumn(width="medium"),
+                    "Change (%)": st.column_config.TextColumn(width="medium"),
                 },
                 use_container_width=False
             )
