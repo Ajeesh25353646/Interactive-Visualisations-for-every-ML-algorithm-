@@ -14,7 +14,7 @@ st.html("""
 <style>
 
 :root {
-    --bg-primary: #13161B;
+    --bg-primary: #0F1117;
     --bg-card: #1A1E26;
     --bg-card-hover: #212631;
     --accent-1: #8B5CF6;
@@ -29,6 +29,10 @@ st.html("""
     --font-display: 'Syne', sans-serif;
     --font-body: 'DM Sans', sans-serif;
     color-scheme: dark;
+    --cat-core: #8B5CF6;
+    --cat-supervised: #34D399;
+    --cat-unsupervised: #F59E0B;
+    --cat-deep: #F472B6;
 }
 
 .skip-link {
@@ -152,12 +156,21 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; height: 100%;
     display: flex; flex-direction: column;
     margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
 }
+.viz-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--cat-core);
+}
+.section-supervised .viz-card::before { background: var(--cat-supervised); }
+.section-unsupervised .viz-card::before { background: var(--cat-unsupervised); }
+.section-advanced .viz-card::before { background: var(--cat-deep); }
 .viz-card:hover {
     background: var(--bg-card-hover); border-color: var(--border-hover);
     transform: translateY(-4px); box-shadow: 0 8px 40px rgba(124,101,193,0.15);
 }
-.card-icon { font-size: 32px; margin-bottom: 10px; line-height: 1; }
+.card-icon { font-size: 28px; margin-bottom: 8px; line-height: 1; min-height: 32px; }
 .card-title {
     font-family: var(--font-display); font-weight: 600;
     font-size: 17px; color: var(--text-primary); margin-bottom: 8px;
@@ -167,12 +180,12 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; width: fit-content;
 }
 .card-badge.live {
-    background: rgba(34,211,161,0.1); color: var(--accent-green);
-    border: 1px solid rgba(34,211,161,0.2);
+    background: rgba(52,211,153,0.15); color: var(--accent-green);
+    border: 1px solid rgba(52,211,153,0.3);
 }
 .card-badge.coming-soon {
-    background: rgba(107,114,128,0.1); color: var(--text-muted);
-    border: 1px solid rgba(107,114,128,0.2);
+    background: rgba(107,114,128,0.15); color: var(--text-muted);
+    border: 1px solid rgba(107,114,128,0.3);
 }
 .card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 12px; }
 
@@ -182,8 +195,67 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
     text-align: center; color: var(--text-dim); font-size: 13px;
     padding: 10px; border: 1px dashed var(--border); border-radius: 8px; margin-top: auto;
 }
-.viz-card.coming-soon { opacity: 0.5; }
+.viz-card.coming-soon { opacity: 0.75; }
 .viz-card.coming-soon:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
+
+/* ─── STYLE st.page_link TO MATCH viz-card ─── */
+[data-testid="stPageLink"] {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  padding: 28px 24px !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  margin-bottom: 16px;
+}
+[data-testid="stPageLink"]::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cat-core);
+}
+[data-testid="stPageLink"]:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--border-hover) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(124,101,193,0.15);
+}
+[data-testid="stPageLink"] a {
+  all: unset !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  gap: 0 !important;
+}
+[data-testid="stPageLink"] a:hover { background: transparent !important; }
+[data-testid="stPageLink"] a p:first-child {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+[data-testid="stPageLink"] a p:nth-child(2) {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background: rgba(52,211,153,0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(52,211,153,0.3);
+  width: fit-content;
+}
+[data-testid="stPageLink"] a p:nth-child(3) {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
 
 .features-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -290,7 +362,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 st.markdown("""
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <nav class="top-nav" aria-label="Main navigation">
-    <div class="nav-brand">🎯 ML Visualized</div>
+    <div class="nav-brand">ML Visualized</div>
     <div class="nav-links">
         <a href="https://github.com/Ajeesh25353646" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://linkedin.com/in/ajeeshgarg" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -332,57 +404,39 @@ st.markdown("""
 st.markdown('<div class="category-label">Core ML</div>', unsafe_allow_html=True)
 
 core_apps = [
-    ("📈", "Linear Regression", "live", "pages/1_Linear_Regression.py", "Interactive slope/intercept fitting. Residuals, MSE, and full OLS assumptions diagnostic."),
-    ("️", "Regularization", "live", "pages/2_Regularization.py", "Ridge, Lasso, ElasticNet — see penalty strength change coefficients in real-time."),
-    ("📉", "Gradient Descent", "coming-soon", "", "Batch, SGD, Mini-Batch — watch the optimization path change with learning rate."),
-    ("📊", "Evaluation Metrics", "coming-soon", "", "Confusion Matrix, ROC/PR Curves, Threshold Optimization with interactive puzzles."),
-    ("🎯", "Bias-Variance Tradeoff", "coming-soon", "", "Polynomial degree explorer. Watch underfitting become overfitting in real-time."),
-    ("🧶", "K-Means Clustering", "coming-soon", "", "Lloyd's Algorithm step-by-step. Voronoi diagrams. The Elbow Method."),
+    ("Linear Regression", "live", "pages/1_Linear_Regression.py", "Interactive slope/intercept fitting. Residuals, MSE, and full OLS assumptions diagnostic."),
+    ("Regularization", "live", "pages/2_Regularization.py", "Ridge, Lasso, ElasticNet — see penalty strength change coefficients in real-time."),
+    ("Gradient Descent", "coming-soon", "", "Batch, SGD, Mini-Batch — watch the optimization path change with learning rate."),
+    ("Evaluation Metrics", "coming-soon", "", "Confusion Matrix, ROC/PR Curves, Threshold Optimization with interactive puzzles."),
+    ("Bias-Variance Tradeoff", "coming-soon", "", "Polynomial degree explorer. Watch underfitting become overfitting in real-time."),
+    ("K-Means Clustering", "coming-soon", "", "Lloyd's Algorithm step-by-step. Voronoi diagrams. The Elbow Method."),
 ]
 
 r1 = st.columns(3)
-for i, (icon, name, status, page, desc) in enumerate(core_apps[:3]):
+for i, (name, status, page, desc) in enumerate(core_apps[:3]):
     with r1[i]:
         if status == "live":
-            st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
+            st.page_link(page, label=f"{name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
             <div class="viz-card coming-soon">
-                <div class="card-icon">{icon}</div>
                 <div class="card-title">{name}</div>
-                <div class="card-badge {status}">○ Coming Soon</div>
+                <div class="card-badge coming-soon">○ Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r2 = st.columns(3)
-for i, (icon, name, status, page, desc) in enumerate(core_apps[3:]):
+for i, (name, status, page, desc) in enumerate(core_apps[3:]):
     with r2[i]:
         if status == "live":
-            st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
+            st.page_link(page, label=f"{name}\n\n● Live\n\n{desc}", use_container_width=True)
         else:
             st.markdown(f"""
             <div class="viz-card coming-soon">
-                <div class="card-icon">{icon}</div>
                 <div class="card-title">{name}</div>
-                <div class="card-badge {status}">○ Coming Soon</div>
-                <div class="card-desc">{desc}</div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
-
-r2 = st.columns(3)
-for i, (icon, name, status, desc) in enumerate(core_apps[3:]):
-    with r2[i]:
-        if status == "live":
-            st.page_link("pages/1_Linear_Regression.py", label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
-        else:
-            st.markdown(f"""
-            <div class="viz-card coming-soon">
-                <div class="card-icon">{icon}</div>
-                <div class="card-title">{name}</div>
-                <div class="card-badge {status}">○ Coming Soon</div>
+                <div class="card-badge coming-soon">○ Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
@@ -403,19 +457,31 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Supervised Learning</div>', unsafe_allow_html=True)
 
 supervised_apps = [
-    ("", "Classification", "coming-soon", "", "KNN, SVM, Naive Bayes — decision boundary explorer with live comparison."),
-    ("", "Random Forest", "coming-soon", "", "Gini vs Entropy, tree explorer, ensemble demo with OOB error."),
-    ("", "Gradient Boosting", "coming-soon", "", "Residual learning step-by-step. XGBoost vs LightGBM vs CatBoost."),
+    ("Classification", "coming-soon", "", "KNN, SVM, Naive Bayes — decision boundary explorer with live comparison."),
+    ("Random Forest", "coming-soon", "", "Gini vs Entropy, tree explorer, ensemble demo with OOB error."),
+    ("Gradient Boosting", "coming-soon", "", "Residual learning step-by-step. XGBoost vs LightGBM vs CatBoost."),
 ]
 
 r3 = st.columns(3)
-for i, (icon, name, status, page, desc) in enumerate(supervised_apps):
+for i, (name, status, page, desc) in enumerate(supervised_apps):
     with r3[i]:
         if status == "live":
-            st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
+            st.markdown(f"""
+            <a href="/{page.split('.')[0].replace('pages/', '')}" target="_self" class="card-link">
+                <div class="viz-card">
+                    <div class="card-title">{name}</div>
+                    <div class="card-badge live">● Live</div>
+                    <div class="card-desc">{desc}</div>
+                </div>
+            </a>
+            """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
-            <div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
+            <div class="viz-card coming-soon">
+                <div class="card-title">{name}</div>
+                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-desc">{desc}</div>
+            </div>
             """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
@@ -434,16 +500,22 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Unsupervised Learning</div>', unsafe_allow_html=True)
 
 unsupervised_apps = [
-    ("", "Clustering Algorithms", "coming-soon", "", "DBSCAN, Hierarchical, GMM — compare algorithms on the same dataset."),
+    ("Clustering Algorithms", "coming-soon", "", "DBSCAN, Hierarchical, GMM — compare algorithms on the same dataset."),
+    ("PCA — Principal Components", "coming-soon", "", "Eigenvalues, explained variance, projection — see dimensions collapse in real-time."),
+    ("Dimensionality Reduction", "coming-soon", "", "PCA vs UMAP vs Isomap. Compare manifold learning side-by-side."),
 ]
 
 r_unsup = st.columns(3)
-with r_unsup[0]:
-    icon, name, status, page, desc = unsupervised_apps[0]
-    st.markdown(f"""
-    <div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>
-    """, unsafe_allow_html=True)
-    st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
+for i, (name, status, page, desc) in enumerate(unsupervised_apps):
+    with r_unsup[i]:
+        st.markdown(f"""
+        <div class="viz-card coming-soon">
+            <div class="card-title">{name}</div>
+            <div class="card-badge coming-soon">○ Coming Soon</div>
+            <div class="card-desc">{desc}</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── ADVANCED ───
 st.markdown("""
@@ -460,41 +532,57 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Deep Learning & Advanced</div>', unsafe_allow_html=True)
 
 advanced_apps = [
-    ("", "Neural Networks", "coming-soon", "", "Backpropagation visualizer, activation functions, capacity & overfitting playground."),
-    ("", "CNN — Convolutional Nets", "coming-soon", "", "Receptive field calculator, parameter counter, VGG architecture explorer."),
-    ("", "Transformers & Attention", "coming-soon", "", "Transformer explainer with GPT-2 inference. See attention heads in action."),
-    ("", "PCA — Principal Components", "coming-soon", "", "Eigenvalues, explained variance, projection — see dimensions collapse in real-time."),
-    ("", "Dim. Reduction", "coming-soon", "", "PCA vs UMAP vs Isomap. Compare manifold learning side-by-side."),
-    ("", "Stable Diffusion", "coming-soon", "", "Diffusion explainer with architecture deep dive and scheduler lab."),
-    ("", "Deployment Ready", "coming-soon", "", "Linear Regression with OLS diagnostics. Production-ready Streamlit structure."),
+    ("Neural Networks", "coming-soon", "", "Backpropagation visualizer, activation functions, capacity & overfitting playground."),
+    ("CNN — Convolutional Nets", "coming-soon", "", "Receptive field calculator, parameter counter, VGG architecture explorer."),
+    ("Transformers & Attention", "coming-soon", "", "Transformer explainer with GPT-2 inference. See attention heads in action."),
+    ("Stable Diffusion", "coming-soon", "", "Diffusion explainer with architecture deep dive and scheduler lab."),
 ]
 
 r5 = st.columns(3)
-for i, (icon, name, status, page, desc) in enumerate(advanced_apps[:3]):
+for i, (name, status, page, desc) in enumerate(advanced_apps[:3]):
     with r5[i]:
         if status == "live":
-            st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
+            st.markdown(f"""
+            <a href="/{page.split('.')[0].replace('pages/', '')}" target="_self" class="card-link">
+                <div class="viz-card">
+                    <div class="card-title">{name}</div>
+                    <div class="card-badge live">● Live</div>
+                    <div class="card-desc">{desc}</div>
+                </div>
+            </a>
+            """, unsafe_allow_html=True)
         else:
-            st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="viz-card coming-soon">
+                <div class="card-title">{name}</div>
+                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-desc">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r6 = st.columns(3)
-for i, (icon, name, status, page, desc) in enumerate(advanced_apps[3:6]):
+for i, (name, status, page, desc) in enumerate(advanced_apps[3:]):
     with r6[i]:
         if status == "live":
-            st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
+            st.markdown(f"""
+            <a href="/{page.split('.')[0].replace('pages/', '')}" target="_self" class="card-link">
+                <div class="viz-card">
+                    <div class="card-title">{name}</div>
+                    <div class="card-badge live">● Live</div>
+                    <div class="card-desc">{desc}</div>
+                </div>
+            </a>
+            """, unsafe_allow_html=True)
         else:
-            st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="viz-card coming-soon">
+                <div class="card-title">{name}</div>
+                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-desc">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
             st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
-
-r7 = st.columns(3)
-with r7[0]:
-    icon, name, status, page, desc = advanced_apps[6]
-    if status == "live":
-        st.page_link(page, label=f"{icon} {name}\n\n● Live\n\n{desc}", use_container_width=True)
-    else:
-        st.markdown(f"""<div class="viz-card coming-soon"><div class="card-icon">{icon}</div><div class="card-title">{name}</div><div class="card-badge {status}">○ Coming Soon</div><div class="card-desc">{desc}</div></div>""", unsafe_allow_html=True)
-        st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -504,22 +592,18 @@ st.markdown('<div class="section-title">What Makes This Different</div>', unsafe
 st.markdown("""
 <div class="features-grid">
     <div class="feature-card">
-        <div class="feature-icon">🎮</div>
         <div class="feature-title">Scenario-Based Puzzles</div>
         <div class="feature-desc">Diagnose real ML problems from loss curves and plots — not just flashcards.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon">📐</div>
         <div class="feature-title">Interactive Visualizations</div>
         <div class="feature-desc">Tweak sliders, change parameters, see algorithms respond in real-time.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon">💬</div>
         <div class="feature-title">200+ Interview Q&A</div>
         <div class="feature-desc">Curated answers with mathematical foundations. Not memorization — understanding.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon">🚀</div>
         <div class="feature-title">Free, No Signup</div>
         <div class="feature-desc">Just open and learn. No account, no paywall, no data collection.</div>
     </div>
