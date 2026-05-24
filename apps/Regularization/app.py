@@ -75,15 +75,12 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.subheader("📋 Weight (Coefficient) Table")
+    st.subheader(" Weight (Coefficient) Table")
     st.write("Compare how each model treats the same features.")
     
-    # Stylized DataFrame
-    def color_zeros(val):
-        color = 'red' if abs(val) < 1e-4 else 'black'
-        return f'color: {color}'
-
-    st.dataframe(weight_df.style.applymap(color_zeros).format("{:.4f}"), height=450)
+    # Format values for display
+    display_df = weight_df.round(4)
+    st.dataframe(display_df, height=450)
 
 st.divider()
 
