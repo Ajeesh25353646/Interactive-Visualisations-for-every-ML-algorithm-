@@ -9,7 +9,7 @@ st.html("""
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@400;500;600;700;800&display=swap">
 <style>
 :root {
-    --bg-primary: #13161B;
+    --bg-primary: #0F1117;
     --bg-card: #1A1E26;
     --bg-card-hover: #212631;
     --accent-1: #8B5CF6;
@@ -46,8 +46,27 @@ h1, h2, h3, h4 { font-family: var(--font-display) !important; color: var(--text-
 .stAlert p { color: var(--text-primary) !important; }
 .stButton button { background: var(--accent-1) !important; color: white !important; border: none !important; font-family: var(--font-display) !important; border-radius: 8px !important; }
 .stButton button:hover { background: var(--accent-2) !important; }
+.stSidebar { background: var(--bg-card) !important; }
+.stSidebar .stSlider label, .stSidebar .stMarkdown, .stSidebar p, .stSidebar .stText { color: var(--text-primary) !important; }
+.stSidebar .stDivider hr { border-color: var(--border) !important; }
+.stSidebar .stButton button { background: var(--accent-1) !important; color: white !important; border: none !important; font-family: var(--font-display) !important; }
+.stSidebar .stButton button:hover { background: var(--accent-2) !important; }
+.stSidebar .stCheckbox label { color: var(--text-primary) !important; }
+.stSidebar .stRadio label { color: var(--text-primary) !important; }
+.stSidebar .stSelectbox label { color: var(--text-primary) !important; }
+.stSidebar .stSelectbox div[data-baseweb="select"] { color: var(--text-primary) !important; background: var(--bg-card-hover) !important; }
+.stSidebar .stSlider div[data-baseweb="slider"] div { background: var(--accent-1) !important; }
+.stSidebar .stMetric { background: var(--bg-card) !important; border-radius: 8px; padding: 12px; }
+.stSidebar .stMetric label { color: var(--text-muted) !important; }
+.stSidebar .stMetric div[data-testid="stMetricValue"] { color: var(--text-primary) !important; }
 .stMetric label { color: var(--text-muted) !important; }
 .stMetric div[data-testid="stMetricValue"] { color: var(--text-primary) !important; }
+
+@media (max-width: 768px) {
+  .block-container { padding-top: 1rem !important; padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+  .stSidebar .stSlider label, .stSidebar .stMarkdown, .stSidebar p { font-size: 13px !important; }
+  .stTabs [data-baseweb="tab"] { font-size: 13px !important; }
+}
 </style>
 """)
 
