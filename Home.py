@@ -11,6 +11,7 @@ st.html("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@400;500;600;700;800&display=swap">
+<meta name="theme-color" content="#0F1117">
 <style>
 
 :root {
@@ -191,10 +192,6 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 
 .card-link { text-decoration: none; color: inherit; display: block; border-radius: 16px; margin-bottom: 16px; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; } .card-link:hover .viz-card { background: var(--bg-card-hover) !important; border-color: var(--border-hover) !important; transform: translateY(-4px) !important; box-shadow: 0 8px 40px rgba(124,101,193,0.15) !important; } .st-emotion-cache-1xarl3l, .st-emotion-cache-15hul8a { display: none !important; }
 
-.coming-soon-placeholder {
-    text-align: center; color: var(--text-dim); font-size: 13px;
-    padding: 10px; border: 1px dashed var(--border); border-radius: 8px; margin-top: auto;
-}
 .viz-card.coming-soon { opacity: 0.75; }
 .viz-card.coming-soon:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
 
@@ -330,7 +327,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
   .viz-card, .card-link { animation: none !important; }
   .hero-cta:hover { transform: none !important; }
   .viz-card:hover { transform: none !important; }
-  .card-link:hover .viz-card { transform: none !important !important; }
+  .card-link:hover .viz-card { transform: none !important; }
 }
 
 :focus-visible {
@@ -421,11 +418,10 @@ for i, (name, status, page, desc) in enumerate(core_apps[:3]):
             st.markdown(f"""
             <div class="viz-card coming-soon">
                 <div class="card-title">{name}</div>
-                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-badge coming-soon">Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r2 = st.columns(3)
 for i, (name, status, page, desc) in enumerate(core_apps[3:]):
@@ -436,22 +432,21 @@ for i, (name, status, page, desc) in enumerate(core_apps[3:]):
             st.markdown(f"""
             <div class="viz-card coming-soon">
                 <div class="card-title">{name}</div>
-                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-badge coming-soon">Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── SUPERVISED ───
 st.markdown("""
 <svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
-    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+    <circle cx="15" cy="18" r="2" fill="#34D399" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#34D399" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#34D399" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#34D399" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#34D399" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#34D399" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#34D399" stroke-width="1" opacity="0.4"/>
 </svg>
 """, unsafe_allow_html=True)
 st.markdown('<div class="category-label" style="margin-top: 32px;">Supervised Learning</div>', unsafe_allow_html=True)
@@ -479,22 +474,21 @@ for i, (name, status, page, desc) in enumerate(supervised_apps):
             st.markdown(f"""
             <div class="viz-card coming-soon">
                 <div class="card-title">{name}</div>
-                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-badge coming-soon">Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── UNSUPERVISED ───
 st.markdown("""
 <svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
-    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+    <circle cx="15" cy="18" r="2" fill="#F59E0B" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#F59E0B" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#F59E0B" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#F59E0B" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#F59E0B" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#F59E0B" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#F59E0B" stroke-width="1" opacity="0.4"/>
 </svg>
 """, unsafe_allow_html=True)
 st.markdown('<div class="category-label" style="margin-top: 32px;">Unsupervised Learning</div>', unsafe_allow_html=True)
@@ -511,22 +505,21 @@ for i, (name, status, page, desc) in enumerate(unsupervised_apps):
         st.markdown(f"""
         <div class="viz-card coming-soon">
             <div class="card-title">{name}</div>
-            <div class="card-badge coming-soon">○ Coming Soon</div>
+            <div class="card-badge coming-soon">Coming Soon</div>
             <div class="card-desc">{desc}</div>
         </div>
         """, unsafe_allow_html=True)
-        st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 # ─── ADVANCED ───
 st.markdown("""
 <svg class="section-art" viewBox="0 0 120 24" width="120" height="24" aria-hidden="true">
-    <circle cx="15" cy="18" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="35" cy="14" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="55" cy="16" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="75" cy="8" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="95" cy="10" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <circle cx="110" cy="6" r="2" fill="#8B5CF6" opacity="0.3"/>
-    <line x1="8" y1="20" x2="115" y2="5" stroke="#8B5CF6" stroke-width="1" opacity="0.4"/>
+    <circle cx="15" cy="18" r="2" fill="#F472B6" opacity="0.3"/>
+    <circle cx="35" cy="14" r="2" fill="#F472B6" opacity="0.3"/>
+    <circle cx="55" cy="16" r="2" fill="#F472B6" opacity="0.3"/>
+    <circle cx="75" cy="8" r="2" fill="#F472B6" opacity="0.3"/>
+    <circle cx="95" cy="10" r="2" fill="#F472B6" opacity="0.3"/>
+    <circle cx="110" cy="6" r="2" fill="#F472B6" opacity="0.3"/>
+    <line x1="8" y1="20" x2="115" y2="5" stroke="#F472B6" stroke-width="1" opacity="0.4"/>
 </svg>
 """, unsafe_allow_html=True)
 st.markdown('<div class="category-label" style="margin-top: 32px;">Deep Learning & Advanced</div>', unsafe_allow_html=True)
@@ -555,11 +548,10 @@ for i, (name, status, page, desc) in enumerate(advanced_apps[:3]):
             st.markdown(f"""
             <div class="viz-card coming-soon">
                 <div class="card-title">{name}</div>
-                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-badge coming-soon">Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 r6 = st.columns(3)
 for i, (name, status, page, desc) in enumerate(advanced_apps[3:]):
@@ -578,11 +570,10 @@ for i, (name, status, page, desc) in enumerate(advanced_apps[3:]):
             st.markdown(f"""
             <div class="viz-card coming-soon">
                 <div class="card-title">{name}</div>
-                <div class="card-badge coming-soon">○ Coming Soon</div>
+                <div class="card-badge coming-soon">Coming Soon</div>
                 <div class="card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown('<div class="coming-soon-placeholder">Coming Soon</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -625,7 +616,7 @@ st.markdown("""
 # ─── FOOTER ───
 st.markdown("""
 <div class="footer">
-    <p>Built with Python, Streamlit, D3.js, and ☕</p>
+    <p>Built with Python, Streamlit, and D3.js</p>
     <p><a href="https://linkedin.com/in/ajeeshgarg" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="https://github.com/Ajeesh25353646" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     <p class="footer-hiring"><strong>Hiring an ML Engineer?</strong> <a href="mailto:gargajeesh@gmail.com">Let's talk →</a></p>
 </div>
