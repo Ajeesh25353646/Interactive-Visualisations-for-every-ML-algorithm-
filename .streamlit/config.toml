@@ -1,9 +1,16 @@
 [theme]
 primaryColor = "#8B5CF6"
-backgroundColor = "#13161B"
+backgroundColor = "#0F1117"
 secondaryBackgroundColor = "#1A1E26"
 textColor = "#F1F5F9"
 font = "sans serif"
+
+[theme.sidebar]
+backgroundColor = "#1A1E26"
+secondaryBackgroundColor = "#0F1117"
+textColor = "#F1F5F9"
+
+
 
 [server]
 headless = true
