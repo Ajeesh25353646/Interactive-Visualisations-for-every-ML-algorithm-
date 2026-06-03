@@ -63,7 +63,6 @@ h1, h2, h3, h4 { font-family: var(--font-display) !important; color: var(--text-
 .stSidebar .stButton button:hover { background: var(--accent-2) !important; }
 .stSidebar .stSelectbox label { color: var(--text-primary) !important; }
 .stSidebar .stSelectbox div[data-baseweb="select"] { color: var(--text-primary) !important; background: var(--bg-card-hover) !important; }
-.stSidebar .stSlider div[data-baseweb="slider"] div { background: var(--accent-1) !important; }
 .stSidebar .stCheckbox label { color: var(--text-primary) !important; }
 .stSidebar .stToggle label { color: var(--text-primary) !important; }
 .stSidebar .stAlert { background: rgba(139,92,246,0.1) !important; border-color: var(--accent-1) !important; color: var(--text-primary) !important; }
