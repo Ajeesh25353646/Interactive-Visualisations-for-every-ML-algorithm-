@@ -116,8 +116,7 @@ body { background: var(--bg-primary) !important; color: var(--text-primary) !imp
 }
 .hero-title:last-of-type { margin-bottom: 16px; }
 .gradient-text {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    color: var(--accent-1);
 }
 .hero-subtitle {
     font-size: clamp(15px, 1.6vw, 18px); color: var(--text-muted);
@@ -372,13 +371,13 @@ st.markdown("""
 <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content" id="main-content">
-        <div class="hero-title">See <span class="gradient-text">ML</span>. Understand <span class="gradient-text">ML</span>.</div>
-        <div class="hero-title">Ace the Interview.</div>
+        <h1 class="hero-title">See <span class="gradient-text">ML</span>. Understand <span class="gradient-text">ML</span>.</h1>
+        <h1 class="hero-title">Ace the Interview.</h1>
         <p class="hero-subtitle">
-            Interactive visualizations for every core ML concept — from Regularization to Transformers.<br>
-            Tweak parameters, see algorithms respond in real-time. No signup. Free.
+            Interactive visualizations for every core ML concept. From Regularization to Transformers.<br>
+            Tweak parameters, watch algorithms adapt. No signup. Free.
         </p>
-        <a href="#explore" class="hero-cta">Start Exploring →</a>
+        <a href="#explore" class="hero-cta">Start Exploring</a>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -401,11 +400,11 @@ st.markdown("""
 st.markdown('<div class="category-label">Core ML</div>', unsafe_allow_html=True)
 
 core_apps = [
-    ("Linear Regression", "live", "pages/1_Linear_Regression.py", "Interactive slope/intercept fitting. Residuals, MSE, and full OLS assumptions diagnostic."),
-    ("Regularization", "live", "pages/2_Regularization.py", "Ridge, Lasso, ElasticNet — see penalty strength change coefficients in real-time."),
-    ("Gradient Descent", "coming-soon", "", "Batch, SGD, Mini-Batch — watch the optimization path change with learning rate."),
+    ("Linear Regression", "live", "pages/1_Linear_Regression.py", "Fit a line by hand. Residuals, MSE, and full OLS assumptions diagnostic."),
+    ("Regularization", "live", "pages/2_Regularization.py", "Ridge vs Lasso vs ElasticNet. Watch how penalty strength reshapes coefficients."),
+    ("Gradient Descent", "live", "pages/4_Gradient_Descent.py", "Batch, SGD, Mini-Batch. Watch the optimization path shift with learning rate."),
     ("Evaluation Metrics", "coming-soon", "", "Confusion Matrix, ROC/PR Curves, Threshold Optimization with interactive puzzles."),
-    ("Bias-Variance Tradeoff", "coming-soon", "", "Polynomial degree explorer. Watch underfitting become overfitting in real-time."),
+    ("Bias-Variance Tradeoff", "coming-soon", "", "Polynomial degree explorer. Watch underfitting become overfitting as you turn the dial."),
     ("K-Means Clustering", "coming-soon", "", "Lloyd's Algorithm step-by-step. Voronoi diagrams. The Elbow Method."),
 ]
 
@@ -452,9 +451,9 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Supervised Learning</div>', unsafe_allow_html=True)
 
 supervised_apps = [
-    ("Classification", "coming-soon", "", "KNN, SVM, Naive Bayes — decision boundary explorer with live comparison."),
+    ("Classification", "coming-soon", "", "KNN, SVM, Naive Bayes. Decision boundary explorer with live comparison."),
     ("Random Forest", "coming-soon", "", "Gini vs Entropy, tree explorer, ensemble demo with OOB error."),
-    ("Gradient Boosting", "coming-soon", "", "Residual learning step-by-step. XGBoost vs LightGBM vs CatBoost."),
+    ("Gradient Boosting", "coming-soon", "", "Step-by-step residual learning. XGBoost vs LightGBM vs CatBoost."),
 ]
 
 r3 = st.columns(3)
@@ -494,8 +493,8 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Unsupervised Learning</div>', unsafe_allow_html=True)
 
 unsupervised_apps = [
-    ("Clustering Algorithms", "coming-soon", "", "DBSCAN, Hierarchical, GMM — compare algorithms on the same dataset."),
-    ("PCA — Principal Components", "coming-soon", "", "Eigenvalues, explained variance, projection — see dimensions collapse in real-time."),
+    ("Clustering Algorithms", "coming-soon", "", "DBSCAN, Hierarchical, GMM. Compare algorithms side-by-side on the same data."),
+    ("PCA: Principal Components", "coming-soon", "", "Eigenvalues, explained variance, projection. Watch dimensions collapse as you reduce."),
     ("Dimensionality Reduction", "coming-soon", "", "PCA vs UMAP vs Isomap. Compare manifold learning side-by-side."),
 ]
 
@@ -525,9 +524,9 @@ st.markdown("""
 st.markdown('<div class="category-label" style="margin-top: 32px;">Deep Learning & Advanced</div>', unsafe_allow_html=True)
 
 advanced_apps = [
-    ("Neural Networks", "coming-soon", "", "Backpropagation visualizer, activation functions, capacity & overfitting playground."),
-    ("CNN — Convolutional Nets", "coming-soon", "", "Receptive field calculator, parameter counter, VGG architecture explorer."),
-    ("Transformers & Attention", "coming-soon", "", "Transformer explainer with GPT-2 inference. See attention heads in action."),
+    ("Neural Networks", "coming-soon", "", "Backpropagation visualizer, activation functions, capacity and overfitting playground."),
+    ("CNN: Convolutional Networks", "coming-soon", "", "Receptive field calculator, parameter counter, VGG architecture explorer."),
+    ("Transformers & Attention", "coming-soon", "", "Transformer explainer with GPT-2 inference. See attention heads fire in real time."),
     ("Stable Diffusion", "coming-soon", "", "Diffusion explainer with architecture deep dive and scheduler lab."),
 ]
 
@@ -584,15 +583,15 @@ st.markdown("""
 <div class="features-grid">
     <div class="feature-card">
         <div class="feature-title">Scenario-Based Puzzles</div>
-        <div class="feature-desc">Diagnose real ML problems from loss curves and plots — not just flashcards.</div>
+        <div class="feature-desc">Diagnose real ML problems from loss curves and plots. Not just flashcards.</div>
     </div>
     <div class="feature-card">
         <div class="feature-title">Interactive Visualizations</div>
-        <div class="feature-desc">Tweak sliders, change parameters, see algorithms respond in real-time.</div>
+        <div class="feature-desc">Tweak sliders, change parameters, watch algorithms adapt instantly.</div>
     </div>
     <div class="feature-card">
         <div class="feature-title">200+ Interview Q&A</div>
-        <div class="feature-desc">Curated answers with mathematical foundations. Not memorization — understanding.</div>
+        <div class="feature-desc">Answers grounded in mathematical foundations. Every one explained, not memorized.</div>
     </div>
     <div class="feature-card">
         <div class="feature-title">Free, No Signup</div>
@@ -604,10 +603,10 @@ st.markdown("""
 # ─── CTA ───
 st.markdown("""
 <div class="cta-section">
-    <h2 class="cta-title">Ready to see ML like never before?</h2>
-    <p class="cta-subtitle">Start with Linear Regression — more visualizations added every week.</p>
+    <h2 class="cta-title">Ready to actually see how ML works?</h2>
+    <p class="cta-subtitle">Start with Linear Regression. More algorithms added every week. No signup, no catch.</p>
     <div class="cta-buttons">
-        <a href="#explore" class="hero-cta">Explore Algorithms →</a>
+        <a href="#explore" class="hero-cta">Explore Algorithms</a>
         <a href="https://github.com/Ajeesh25353646/Interactive-Visualisations-for-every-ML-algorithm-" target="_blank" rel="noopener noreferrer" class="cta-secondary">Star on GitHub</a>
     </div>
 </div>
