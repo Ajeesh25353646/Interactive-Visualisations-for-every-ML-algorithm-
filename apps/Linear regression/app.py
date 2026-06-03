@@ -33,7 +33,7 @@ with st.sidebar:
     st.markdown("---")
     st.subheader("🔬 Advanced Topics")
     st.markdown("Want to master OLS assumptions?")
-    if st.button("📊 OLS Assumptions Diagnostic", use_container_width=True, key="adv_sidebar", help="Check homoscedasticity, normality, VIF, and autocorrelation"):
+    if st.button("📊 OLS Assumptions Diagnostic", width="stretch", key="adv_sidebar", help="Check homoscedasticity, normality, VIF, and autocorrelation"):
         st.switch_page("pages/3_OLS_Assumptions.py")
 
 # --- Data Generation ---
@@ -88,7 +88,7 @@ with col1:
         template="plotly_white",
         height=500
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 with col2:
     st.subheader("📊 The Scoreboard")
@@ -114,8 +114,8 @@ with tab1:
     ### What are Residuals?
     Look at the faint red vertical lines in the graph above. Those are **Residuals**.
     *   **Actual Value ($y$):** The blue dot (What the house actually sold for).
-    *   **Predicted Value ($\hat{y}$):** The red line (What your model guessed).
-    *   **Residual ($e$):** The distance between them ($y - \hat{y}$).
+    *   **Predicted Value ($\\hat{y}$):** The red line (What your model guessed).
+    *   **Residual ($e$):** The distance between them ($y - \\hat{y}$).
     """)
     
     # Residual Distribution
@@ -128,7 +128,7 @@ with tab1:
         height=300,
         margin=dict(l=20, r=20, t=40, b=20)
     )
-    st.plotly_chart(res_fig, use_container_width=True)
+    st.plotly_chart(res_fig, width="stretch")
     
     st.markdown("""
     **Interview Tip:** "In a perfect model, the sum of residuals is zero and they are normally distributed (Bell Curve)."
@@ -140,7 +140,7 @@ with tab2:
     How do we know if a line is "good"? We use a **Loss Function**.
     The most common is **MSE**. We take every residual, **square it** (to remove negative signs and penalize big errors more), and find the average.
     
-    $$MSE = \\frac{1}{n} \\sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
+    $$MSE = \\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2$$
     """)
 
 with tab3:
@@ -185,5 +185,5 @@ Check out the **OLS Assumptions Diagnostic** page (in sidebar ↑) for interacti
 
 col_back1, col_back2, col_back3 = st.columns([1, 2, 1])
 with col_back2:
-    if st.button("🔬 Open Advanced Diagnostics", use_container_width=True, key="adv_footer"):
+    if st.button("🔬 Open Advanced Diagnostics", width="stretch", key="adv_footer"):
         st.switch_page("pages/3_OLS_Assumptions.py")

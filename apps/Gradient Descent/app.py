@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import streamlit.components.v1 as components
 import os
 
 st.title("📉 Gradient Descent: The Path to Optimization")
@@ -112,7 +111,7 @@ with col1:
         template="plotly_white",
         height=500
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 with col2:
     st.subheader("📊 Convergence Stats")
@@ -148,7 +147,7 @@ html_file_path = os.path.join(_this_dir, "Gradient Descent.html")
 if os.path.exists(html_file_path):
     with open(html_file_path, 'r', encoding='utf-8') as f:
         html_content = f.read()
-    components.html(html_content, height=800, scrolling=True)
+    st.iframe(html_content, height=800, scrolling=True)
 else:
     st.error("HTML visualisation file not found.")
 

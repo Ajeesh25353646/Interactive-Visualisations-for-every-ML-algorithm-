@@ -142,7 +142,7 @@ with tab1:
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     
     with col2:
         st.subheader("📊 Diagnostics")
@@ -279,7 +279,7 @@ with tab2:
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     
     with col2:
         st.subheader("📊 Normality Tests")
@@ -289,7 +289,7 @@ with tab2:
         st.metric("Shapiro-Wilk p-value", f"{shapiro_p:.4f}")
         
         # Anderson-Darling test
-        ad_result = stats.anderson(residuals_qq, dist='norm')
+        ad_result = stats.anderson(residuals_qq, dist='norm', method='interpolate')
         ad_stat = ad_result.statistic
         
         st.metric("Anderson-Darling Statistic", f"{ad_stat:.4f}")
@@ -467,7 +467,7 @@ with tab3:
             yaxis_title="Features"
         )
         
-        st.plotly_chart(fig_corr, use_container_width=True)
+        st.plotly_chart(fig_corr, width="stretch")
     
     with col2:
         st.subheader("📊 VIF Values")
@@ -494,7 +494,7 @@ with tab3:
             yaxis_range=[0, max(max(vif_values) * 1.2, 15)]
         )
         
-        st.plotly_chart(fig_vif, use_container_width=True)
+        st.plotly_chart(fig_vif, width="stretch")
     
     st.divider()
     
@@ -508,7 +508,7 @@ with tab3:
     
     vif_df_styled['VIF'] = vif_df_styled['VIF'].round(3)
     
-    st.dataframe(vif_df_styled, use_container_width=True, height=200)
+    st.dataframe(vif_df_styled, width="stretch", height=200)
     
     # --- NEW: Coefficient Stability Demo ---
     st.divider()
@@ -518,7 +518,7 @@ with tab3:
     If VIF is high, the coefficients will jump wildly!
     """)
     
-    if st.button("🏃 Run Stress Test", use_container_width=True):
+    if st.button("🏃 Run Stress Test", width="stretch"):
         # 1. Fit Original Model
         y_sim = X @ np.ones(n_features) + np.random.normal(0, 0.5, n_samples)
         reg1 = LinearRegression().fit(X, y_sim)
@@ -551,7 +551,7 @@ with tab3:
                     "Noisy Coef": st.column_config.NumberColumn(width="medium"),
                     "Change (%)": st.column_config.TextColumn(width="medium"),
                 },
-                use_container_width=False
+                width="content"
             )
         
         with col_s2:
@@ -739,7 +739,7 @@ with tab4:
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     
     with col2:
         st.subheader("📊 Durbin-Watson Statistic")

@@ -72,7 +72,7 @@ with col1:
         fig.add_trace(go.Scatter(x=X_plot.ravel(), y=y_pred, mode='lines', name=name, line=dict(color=colors[name], width=2)))
     
     fig.update_layout(height=500, template="plotly_white", margin=dict(l=0, r=0, t=30, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 with col2:
     st.subheader(" Weight (Coefficient) Table")
