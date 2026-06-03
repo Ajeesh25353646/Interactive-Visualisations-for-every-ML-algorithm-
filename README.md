@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://linear--regression.streamlit.app/">
+  <a href="https://ml-visualized.streamlit.app/">
     <img src="https://img.shields.io/badge/Try%20It%20Live-8B5CF6?style=for-the-badge" alt="Try It Live">
   </a>
   <a href="#-whats-inside">
@@ -43,7 +43,7 @@ Zero setup. Zero signup. Just open and learn.
 
 ## 🚀 Live Demo
 
-**[Launch the App →](https://linear--regression.streamlit.app/)**
+**[Launch the App →](https://ml-visualized.streamlit.app/)**
 
 ---
 
@@ -99,5 +99,5 @@ Each visualization is designed to answer the questions interviewers actually ask
 <p align="center">
   <em>More visualizations added every week.</em>
   <br>
-  <strong><a href="https://linear--regression.streamlit.app/">Try it now →</a></strong>
+  <strong><a href="https://ml-visualized.streamlit.app/">Try it now →</a></strong>
 </p>
