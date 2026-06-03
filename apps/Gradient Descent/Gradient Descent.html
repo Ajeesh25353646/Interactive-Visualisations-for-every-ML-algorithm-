@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Descent Loss Landscape Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0F1117; color: #e2e8f0; overflow: hidden; }
+        .panel { background: #1A1E26; border-radius: 8px; border: 1px solid #2E3440; overflow: hidden; display: flex; flex-direction: column; }
+        .canvas-container { position: relative; width: 100%; height: 100%; }
+        input[type=range] { accent-color: #8B5CF6; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1E26; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .btn { transition: all 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body class="h-screen w-screen grid grid-rows-[auto_1fr_auto] gap-4 p-4">
+
+    <header class="flex justify-between items-center h-12">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">∇</div>
+            <h1 class="text-xl font-bold tracking-tight text-white">Loss Landscape Explorer</h1>
+        </div>
+        <div class="flex gap-2 text-xs font-mono text-slate-400">
+            <span id="status-display" class="bg-slate-800 px-2 py-1 rounded">Ready</span>
+        </div>
+    </header>
+
+    <main class="grid grid-cols-12 gap-4 h-full min-h-0">
+        
+        <aside class="col-span-2 panel p-4 overflow-y-auto">
+            <h2 class="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wider">Configuration</h2>
+            
+            <div class="mb-6">
+                <label class="block text-xs text-slate-400 mb-2">Loss Function</label>
+                <select id="loss-func" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+                    <option value="quadratic">Quadratic Bowl (Convex)</option>
+                    <option value="saddle">Saddle Point</option>
+                    <option value="rosenbrock">Rosenbrock (Banana)</option>
+                    <option value="multimodal">Multi-Modal (Local Minima)</option>
+                    <option value="beale">Beale Function</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-xs text-slate-400 mb-2">Optimizer</label>
+                <select id="optimizer" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+                    <option value="sgd">Gradient Descent (SGD)</option>
+                    <option value="momentum">Momentum</option>
+                    <option value="nesterov">Nesterov Momentum</option>
+                    <option value="rmsprop">RMSProp</option>
+                    <option value="adam">Adam</option>
+                </select>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Learning Rate</span>
+                        <span id="lr-val" class="text-blue-400 font-mono">0.05</span>
+                    </div>
+                    <input type="range" id="lr" min="0.001" max="0.5" step="0.001" value="0.05" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div id="momentum-control" class="hidden">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Momentum</span>
+                        <span id="mom-val" class="text-blue-400 font-mono">0.9</span>
+                    </div>
+                    <input type="range" id="momentum" min="0" max="0.99" step="0.01" value="0.9" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div id="noise-control" class="hidden">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Noise (SGD)</span>
+                        <span id="noise-val" class="text-blue-400 font-mono">0.0</span>
+                    </div>
+                    <input type="range" id="noise" min="0" max="0.5" step="0.01" value="0.0" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <button id="btn-step" class="btn bg-slate-700 hover:bg-slate-600 text-white py-2 rounded text-sm font-medium">Step</button>
+                <button id="btn-reset" class="btn bg-slate-700 hover:bg-slate-600 text-white py-2 rounded text-sm font-medium">Reset</button>
+                <button id="btn-random" class="btn col-span-2 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded text-sm font-medium">Randomize Start</button>
+            </div>
+            
+            <div class="border-t border-slate-700 pt-4">
+                <button id="btn-run" class="btn w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded text-sm font-bold shadow-lg shadow-green-900/20">Run Optimization</button>
+            </div>
+            
+            <div class="mt-4 text-[10px] text-slate-500 leading-relaxed">
+                <p><strong>Tip:</strong> Try high learning rates on the Saddle function to see oscillation. Use Momentum to escape local minima.</p>
+            </div>
+        </aside>
+
+        <section class="col-span-7 panel relative">
+            <div class="absolute top-2 left-2 z-10 flex gap-2">
+                <span class="bg-slate-900/80 backdrop-blur px-2 py-1 rounded text-xs text-slate-300 border border-slate-700">3D Loss Surface</span>
+            </div>
+            <div id="canvas-3d" class="w-full h-full"></div>
+        </section>
+
+        <aside class="col-span-3 panel">
+            <div class="flex-1 relative border-b border-slate-700">
+                <div class="absolute top-2 left-2 z-10 flex gap-2">
+                    <span class="bg-slate-900/80 backdrop-blur px-2 py-1 rounded text-xs text-slate-300 border border-slate-700">Contour & Trajectory</span>
+                </div>
+                <canvas id="canvas-2d" class="w-full h-full"></canvas>
+            </div>
+            
+            <div class="h-1/3 p-4 flex flex-col">
+                <h3 class="text-xs font-semibold text-slate-400 mb-2 uppercase">Training Metrics</h3>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Loss</div>
+                        <div id="metric-loss" class="text-lg font-mono text-white">0.00</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Step</div>
+                        <div id="metric-step" class="text-lg font-mono text-white">0</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Gradient Norm</div>
+                        <div id="metric-grad" class="text-lg font-mono text-white">0.00</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Distance to Min</div>
+                        <div id="metric-dist" class="text-lg font-mono text-white">0.00</div>
+                    </div>
+                </div>
+                <div class="flex-1 min-h-0 relative">
+                    <canvas id="chart-loss"></canvas>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        const MathEngine = {
+            ranges: {
+                quadratic: { x: [-5, 5], y: [-5, 5], z: [0, 50] },
+                saddle: { x: [-4, 4], y: [-4, 4], z: [-10, 10] },
+                rosenbrock: { x: [-2, 2], y: [-1, 3], z: [0, 100] },
+                multimodal: { x: [-4, 4], y: [-4, 4], z: [-2, 5] },
+                beale: { x: [-4.5, 4.5], y: [-4.5, 4.5], z: [0, 1000] }
+            },
+
+            minima: {
+                quadratic: { x: 0, y: 0 },
+                saddle: { x: 0, y: 0 },
+                rosenbrock: { x: 1, y: 1 },
+                multimodal: { x: 0, y: 0 },
+                beale: { x: 3, y: 0.5 }
+            },
+
+            functions: {
+                quadratic: (x, y) => x*x + y*y,
+                saddle: (x, y) => x*x - y*y,
+                rosenbrock: (x, y) => Math.pow(1 - x, 2) + 100 * Math.pow(y - x*x, 2),
+                multimodal: (x, y) => Math.sin(x) + Math.cos(y) + 0.1*(x*x + y*y),
+                beale: (x, y) => Math.pow(1.5 - x + x*y, 2) + Math.pow(2.25 - x + x*y*y, 2) + Math.pow(2.625 - x + x*y*y*y, 2)
+            },
+
+            gradients: {
+                quadratic: (x, y) => ({ dx: 2*x, dy: 2*y }),
+                saddle: (x, y) => ({ dx: 2*x, dy: -2*y }),
+                rosenbrock: (x, y) => {
+                    const dx = -2 * (1 - x) - 400 * x * (y - x*x);
+                    const dy = 200 * (y - x*x);
+                    return { dx, dy };
+                },
+                multimodal: (x, y) => ({ dx: Math.cos(x) + 0.2*x, dy: -Math.sin(y) + 0.2*y }),
+                beale: (x, y) => {
+                    const t1 = 1.5 - x + x*y;
+                    const t2 = 2.25 - x + x*y*y;
+                    const t3 = 2.625 - x + x*y*y*y;
+                    const dx = 2*t1*(-1+y) + 2*t2*(-1+y*y) + 2*t3*(-1+y*y*y);
+                    const dy = 2*t1*(x) + 2*t2*(2*x*y) + 2*t3*(3*x*y*y);
+                    return { dx, dy };
+                }
+            },
+
+            getLoss: (funcName, x, y) => {
+                return MathEngine.functions[funcName](x, y);
+            },
+
+            getGradient: (funcName, x, y, noiseLevel = 0) => {
+                let g = MathEngine.gradients[funcName](x, y);
+                if (noiseLevel > 0) {
+                    g.dx += (Math.random() - 0.5) * noiseLevel;
+                    g.dy += (Math.random() - 0.5) * noiseLevel;
+                }
+                return g;
+            },
+
+            getMin: (funcName) => MathEngine.minima[funcName],
+            getRange: (funcName) => MathEngine.ranges[funcName]
+        };
+
+        class Optimizer {
+            constructor(type, lr, momentum, noise) {
+                this.type = type;
+                this.lr = lr;
+                this.momentum = momentum;
+                this.noise = noise;
+                this.v = { x: 0, y: 0 };
+                this.m = { x: 0, y: 0 };
+                this.v_adam = { x: 0, y: 0 };
+                this.t = 0;
+                this.rms_v = { x: 0, y: 0 };
+            }
+
+            step(x, y, funcName) {
+                this.t++;
+                const g = MathEngine.getGradient(funcName, x, y, this.noise);
+                let dx, dy;
+
+                if (this.type === 'sgd') {
+                    dx = -this.lr * g.dx;
+                    dy = -this.lr * g.dy;
+                } 
+                else if (this.type === 'momentum') {
+                    this.v.x = this.momentum * this.v.x - this.lr * g.dx;
+                    this.v.y = this.momentum * this.v.y - this.lr * g.dy;
+                    dx = this.v.x;
+                    dy = this.v.y;
+                }
+                else if (this.type === 'nesterov') {
+                    const x_look = x + this.momentum * this.v.x;
+                    const y_look = y + this.momentum * this.v.y;
+                    const g_look = MathEngine.getGradient(funcName, x_look, y_look, this.noise);
+                    this.v.x = this.momentum * this.v.x - this.lr * g_look.dx;
+                    this.v.y = this.momentum * this.v.y - this.lr * g_look.dy;
+                    dx = this.v.x;
+                    dy = this.v.y;
+                }
+                else if (this.type === 'rmsprop') {
+                    const decay = 0.9;
+                    const epsilon = 1e-8;
+                    this.rms_v.x = decay * this.rms_v.x + (1 - decay) * g.dx * g.dx;
+                    this.rms_v.y = decay * this.rms_v.y + (1 - decay) * g.dy * g.dy;
+                    dx = -this.lr * g.dx / (Math.sqrt(this.rms_v.x) + epsilon);
+                    dy = -this.lr * g.dy / (Math.sqrt(this.rms_v.y) + epsilon);
+                }
+                else if (this.type === 'adam') {
+                    const beta1 = 0.9;
+                    const beta2 = 0.999;
+                    const epsilon = 1e-8;
+                    this.m.x = beta1 * this.m.x + (1 - beta1) * g.dx;
+                    this.m.y = beta1 * this.m.y + (1 - beta1) * g.dy;
+                    this.v_adam.x = beta2 * this.v_adam.x + (1 - beta2) * g.dx * g.dx;
+                    this.v_adam.y = beta2 * this.v_adam.y + (1 - beta2) * g.dy * g.dy;
+                    const m_hat_x = this.m.x / (1 - Math.pow(beta1, this.t));
+                    const m_hat_y = this.m.y / (1 - Math.pow(beta1, this.t));
+                    const v_hat_x = this.v_adam.x / (1 - Math.pow(beta2, this.t));
+                    const v_hat_y = this.v_adam.y / (1 - Math.pow(beta2, this.t));
+                    dx = -this.lr * m_hat_x / (Math.sqrt(v_hat_x) + epsilon);
+                    dy = -this.lr * m_hat_y / (Math.sqrt(v_hat_y) + epsilon);
+                }
+
+                return { x: x + dx, y: y + dy, grad: g };
+            }
+
+            reset() {
+                this.v = { x: 0, y: 0 };
+                this.m = { x: 0, y: 0 };
+                this.v_adam = { x: 0, y: 0 };
+                this.t = 0;
+                this.rms_v = { x: 0, y: 0 };
+            }
+        }
+
+        class Visualizer {
+            constructor() {
+                this.trajectory = [];
+                this.init3D();
+                this.init2D();
+                this.initChart();
+            }
+
+            init3D() {
+                const container = document.getElementById('canvas-3d');
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0f172a);
+                
+                this.camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+                this.camera.position.set(0, -12, 8);
+                this.camera.lookAt(0, 0, 0);
+
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(this.renderer.domElement);
+
+                const ambientLight = new THREE.AmbientLight(0x404040, 2);
+                this.scene.add(ambientLight);
+                const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+                dirLight.position.set(5, 5, 10);
+                this.scene.add(dirLight);
+
+                const gridHelper = new THREE.GridHelper(20, 20, 0x334155, 0x1e293b);
+                gridHelper.rotation.x = Math.PI / 2;
+                this.scene.add(gridHelper);
+
+                this.geometry = new THREE.PlaneGeometry(10, 10, 64, 64);
+                this.geometry.rotateX(-Math.PI / 2);
+                
+                this.material = new THREE.MeshStandardMaterial({ 
+                    color: 0x3b82f6, 
+                    wireframe: true,
+                    side: THREE.DoubleSide,
+                    flatShading: false,
+                    roughness: 0.4,
+                    metalness: 0.6
+                });
+                
+                this.mesh = new THREE.Mesh(this.geometry, this.material);
+                this.scene.add(this.mesh);
+
+                const markerGeo = new THREE.SphereGeometry(0.25, 16, 16);
+                const markerMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+                this.marker = new THREE.Mesh(markerGeo, markerMat);
+                this.scene.add(this.marker);
+
+                const arrowDir = new THREE.Vector3(0, 1, 0);
+                const arrowOrigin = new THREE.Vector3(0, 0, 0);
+                const arrowLength = 1;
+                const arrowColor = 0xffff00;
+                this.arrowHelper = new THREE.ArrowHelper(arrowDir, arrowOrigin, arrowLength, arrowColor, 0.3, 0.2);
+                this.scene.add(this.arrowHelper);
+
+                this.animate = this.animate.bind(this);
+                this.animate();
+
+                window.addEventListener('resize', () => {
+                    this.camera.aspect = container.clientWidth / container.clientHeight;
+                    this.camera.updateProjectionMatrix();
+                    this.renderer.setSize(container.clientWidth, container.clientHeight);
+                });
+            }
+
+            animate() {
+                requestAnimationFrame(this.animate);
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            init2D() {
+                this.canvas2d = document.getElementById('canvas-2d');
+                this.ctx2d = this.canvas2d.getContext('2d');
+                
+                const resize = () => {
+                    const rect = this.canvas2d.parentElement.getBoundingClientRect();
+                    this.canvas2d.width = rect.width;
+                    this.canvas2d.height = rect.height;
+                };
+                window.addEventListener('resize', resize);
+                resize();
+            }
+
+            initChart() {
+                const ctx = document.getElementById('chart-loss').getContext('2d');
+                this.lossChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Loss',
+                            data: [],
+                            borderColor: '#8B5CF6',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: false,
+                        scales: {
+                            x: { display: false },
+                            y: { 
+                                grid: { color: '#2E3440' },
+                                ticks: { color: '#94a3b8', font: {size: 10} }
+                            }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            updateSurface(funcName) {
+                const range = MathEngine.getRange(funcName);
+                const positions = this.geometry.attributes.position.array;
+                const colors = [];
+                const colorObj = new THREE.Color();
+
+                const scaleX = 10 / (range.x[1] - range.x[0]);
+                const scaleY = 10 / (range.y[1] - range.y[0]);
+                const offsetX = (range.x[0] + range.x[1]) / 2;
+                const offsetY = (range.y[0] + range.y[1]) / 2;
+                const zRange = range.z[1] - range.z[0] || 1;
+                const zScale = 3.0 / zRange;
+                const zOffset = range.z[0];
+
+                for (let i = 0; i < positions.length; i += 3) {
+                    const planeX = positions[i];
+                    const planeY = positions[i + 1];
+                    
+                    const funcX = planeX / scaleX + offsetX;
+                    const funcY = planeY / scaleY + offsetY;
+                    
+                    let z = MathEngine.getLoss(funcName, funcX, funcY);
+                    positions[i + 2] = (z - zOffset) * zScale;
+
+                    const t = Math.max(0, Math.min(1, (z - range.z[0]) / zRange));
+                    colorObj.setHSL(0.65 - t * 0.55, 0.8, 0.5);
+                    colors.push(colorObj.r, colorObj.g, colorObj.b);
+                }
+
+                this.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+                this.geometry.attributes.position.needsUpdate = true;
+                this.geometry.attributes.color.needsUpdate = true;
+                
+                this.material.vertexColors = true;
+                this.material.color.setHex(0xffffff);
+            }
+
+            updateMarker(x, y, funcName) {
+                const range = MathEngine.getRange(funcName);
+                const scaleX = 10 / (range.x[1] - range.x[0]);
+                const scaleY = 10 / (range.y[1] - range.y[0]);
+                const offsetX = (range.x[0] + range.x[1]) / 2;
+                const offsetY = (range.y[0] + range.y[1]) / 2;
+                const zRange = range.z[1] - range.z[0] || 1;
+                const zScale = 3.0 / zRange;
+                const zOffset = range.z[0];
+
+                const planeX = (x - offsetX) * scaleX;
+                const planeY = (y - offsetY) * scaleY;
+                const z = (MathEngine.getLoss(funcName, x, y) - zOffset) * zScale;
+
+                this.marker.position.set(planeX, planeY, z);
+                
+                const g = MathEngine.getGradient(funcName, x, y);
+                const gradLen = Math.sqrt(g.dx*g.dx + g.dy*g.dy);
+                if (gradLen > 0.001) {
+                    const dir = new THREE.Vector3(g.dx, g.dy, 0).normalize();
+                    this.arrowHelper.setDirection(dir);
+                    this.arrowHelper.position.set(planeX, planeY, z + 0.5);
+                    this.arrowHelper.visible = true;
+                } else {
+                    this.arrowHelper.visible = false;
+                }
+            }
+
+            draw2D(x, y, funcName, path) {
+                const ctx = this.ctx2d;
+                const w = this.canvas2d.width;
+                const h = this.canvas2d.height;
+                const range = MathEngine.getRange(funcName);
+
+                ctx.clearRect(0, 0, w, h);
+
+                const mapX = (val) => ((val - range.x[0]) / (range.x[1] - range.x[0])) * w;
+                const mapY = (val) => h - ((val - range.y[0]) / (range.y[1] - range.y[0])) * h;
+
+                const resolution = 30;
+                for (let i = 0; i < resolution; i++) {
+                    for (let j = 0; j < resolution; j++) {
+                        const vx = range.x[0] + (i / resolution) * (range.x[1] - range.x[0]);
+                        const vy = range.y[0] + (j / resolution) * (range.y[1] - range.y[0]);
+                        const z = MathEngine.getLoss(funcName, vx, vy);
+                        
+                        const t = Math.max(0, Math.min(1, (z - range.z[0]) / (range.z[1] - range.z[0])));
+                        const hue = 220 - t * 200;
+                        ctx.fillStyle = `hsla(${hue}, 70%, 40%, 0.3)`;
+                        const cellW = w / resolution;
+                        const cellH = h / resolution;
+                        ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
+                    }
+                }
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.lineWidth = 1;
+                const fieldStep = 5;
+                for (let i = fieldStep; i < resolution - fieldStep; i += fieldStep) {
+                    for (let j = fieldStep; j < resolution - fieldStep; j += fieldStep) {
+                        const vx = range.x[0] + (i / resolution) * (range.x[1] - range.x[0]);
+                        const vy = range.y[0] + (j / resolution) * (range.y[1] - range.y[0]);
+                        const g = MathEngine.getGradient(funcName, vx, vy);
+                        const len = Math.sqrt(g.dx*g.dx + g.dy*g.dy);
+                        if (len > 0.1) {
+                            const scale = 10 / (len + 1);
+                            const px = i * (w / resolution);
+                            const py = h - j * (h / resolution);
+                            ctx.beginPath();
+                            ctx.moveTo(px, py);
+                            ctx.lineTo(px + g.dx * scale * 15, py - g.dy * scale * 15);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                if (path && path.length > 1) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(mapX(path[0].x), mapY(path[0].y));
+                    for (let i = 1; i < path.length; i++) {
+                        ctx.lineTo(mapX(path[i].x), mapY(path[i].y));
+                    }
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#fff';
+                    const stepInterval = Math.max(1, Math.floor(path.length / 30));
+                    for (let i = 0; i < path.length; i += stepInterval) {
+                        ctx.beginPath();
+                        ctx.arc(mapX(path[i].x), mapY(path[i].y), 2, 0, Math.PI*2);
+                        ctx.fill();
+                    }
+                }
+
+                if (x !== undefined && y !== undefined) {
+                    ctx.beginPath();
+                    ctx.arc(mapX(x), mapY(y), 6, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ef4444';
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+
+            updateChart(loss, step) {
+                if (this.lossChart.data.labels.length > 100) {
+                    this.lossChart.data.labels.shift();
+                    this.lossChart.data.datasets[0].data.shift();
+                }
+                this.lossChart.data.labels.push(step);
+                this.lossChart.data.datasets[0].data.push(loss);
+                this.lossChart.update('none');
+            }
+
+            resetData() {
+                this.trajectory = [];
+                this.lossChart.data.labels = [];
+                this.lossChart.data.datasets[0].data = [];
+                this.lossChart.update();
+            }
+        }
+
+        class App {
+            constructor() {
+                this.visualizer = new Visualizer();
+                this.optimizer = new Optimizer('sgd', 0.05, 0.9, 0);
+                this.state = {
+                    x: 2.0,
+                    y: 2.0,
+                    func: 'quadratic',
+                    running: false,
+                    stepCount: 0
+                };
+                this.animationId = null;
+
+                this.bindEvents();
+                this.init();
+            }
+
+            init() {
+                this.updateConfig();
+                this.visualizer.updateSurface(this.state.func);
+                this.visualizer.updateMarker(this.state.x, this.state.y, this.state.func);
+                this.visualizer.trajectory = [{x: this.state.x, y: this.state.y}];
+                this.visualizer.draw2D(this.state.x, this.state.y, this.state.func, this.visualizer.trajectory);
+                this.updateMetrics();
+            }
+
+            bindEvents() {
+                document.getElementById('loss-func').addEventListener('change', (e) => {
+                    this.state.func = e.target.value;
+                    this.visualizer.updateSurface(this.state.func);
+                    this.reset();
+                });
+
+                document.getElementById('optimizer').addEventListener('change', (e) => {
+                    this.optimizer.type = e.target.value;
+                    this.toggleOptimizerControls();
+                    this.reset();
+                });
+
+                document.getElementById('lr').addEventListener('input', (e) => {
+                    this.optimizer.lr = parseFloat(e.target.value);
+                    document.getElementById('lr-val').innerText = this.optimizer.lr.toFixed(3);
+                });
+
+                document.getElementById('momentum').addEventListener('input', (e) => {
+                    this.optimizer.momentum = parseFloat(e.target.value);
+                    document.getElementById('mom-val').innerText = this.optimizer.momentum.toFixed(2);
+                });
+
+                document.getElementById('noise').addEventListener('input', (e) => {
+                    this.optimizer.noise = parseFloat(e.target.value);
+                    document.getElementById('noise-val').innerText = this.optimizer.noise.toFixed(2);
+                });
+
+                document.getElementById('btn-step').addEventListener('click', () => {
+                    if (!this.state.running) {
+                        this.step();
+                    }
+                });
+                
+                document.getElementById('btn-reset').addEventListener('click', () => this.reset());
+                document.getElementById('btn-random').addEventListener('click', () => this.randomize());
+                
+                document.getElementById('btn-run').addEventListener('click', () => {
+                    if (this.state.running) {
+                        this.stop();
+                    } else {
+                        this.run();
+                    }
+                });
+            }
+
+            toggleOptimizerControls() {
+                const momCtrl = document.getElementById('momentum-control');
+                const noiseCtrl = document.getElementById('noise-control');
+                
+                if (['momentum', 'nesterov'].includes(this.optimizer.type)) {
+                    momCtrl.classList.remove('hidden');
+                } else {
+                    momCtrl.classList.add('hidden');
+                }
+
+                if (this.optimizer.type === 'sgd') {
+                    noiseCtrl.classList.remove('hidden');
+                } else {
+                    noiseCtrl.classList.add('hidden');
+                }
+            }
+
+            updateConfig() {
+                this.optimizer.type = document.getElementById('optimizer').value;
+                this.optimizer.lr = parseFloat(document.getElementById('lr').value);
+                this.optimizer.momentum = parseFloat(document.getElementById('momentum').value);
+                this.optimizer.noise = parseFloat(document.getElementById('noise').value);
+                this.toggleOptimizerControls();
+            }
+
+            step() {
+                const result = this.optimizer.step(this.state.x, this.state.y, this.state.func);
+                this.state.x = result.x;
+                this.state.y = result.y;
+                this.state.stepCount++;
+                
+                const loss = MathEngine.getLoss(this.state.func, this.state.x, this.state.y);
+                
+                this.visualizer.trajectory.push({x: this.state.x, y: this.state.y});
+                this.visualizer.updateMarker(this.state.x, this.state.y, this.state.func);
+                this.visualizer.draw2D(this.state.x, this.state.y, this.state.func, this.visualizer.trajectory);
+                this.visualizer.updateChart(loss, this.state.stepCount);
+                this.updateMetrics(loss, result.grad);
+            }
+
+            run() {
+                if (this.state.running) return;
+                this.state.running = true;
+                document.getElementById('btn-run').innerText = "Stop";
+                document.getElementById('btn-run').classList.replace('bg-green-600', 'bg-red-600');
+                document.getElementById('status-display').innerText = "Running...";
+                
+                const loop = () => {
+                    if (!this.state.running) return;
+                    this.step();
+                    const min = MathEngine.getMin(this.state.func);
+                    const dist = Math.sqrt(Math.pow(this.state.x - min.x, 2) + Math.pow(this.state.y - min.y, 2));
+                    if (dist < 0.01 || this.state.stepCount > 500) {
+                        this.stop();
+                        document.getElementById('status-display').innerText = dist < 0.01 ? "Converged" : "Max Steps";
+                    } else {
+                        this.animationId = requestAnimationFrame(loop);
+                    }
+                };
+                loop();
+            }
+
+            stop() {
+                this.state.running = false;
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                    this.animationId = null;
+                }
+                document.getElementById('btn-run').innerText = "Run Optimization";
+                document.getElementById('btn-run').classList.replace('bg-red-600', 'bg-green-600');
+                document.getElementById('status-display').innerText = "Paused";
+            }
+
+            reset() {
+                this.stop();
+                this.optimizer.reset();
+                this.state.stepCount = 0;
+                this.state.x = 2.0; 
+                this.state.y = 2.0;
+                this.visualizer.resetData();
+                this.visualizer.trajectory = [{x: this.state.x, y: this.state.y}];
+                this.visualizer.updateMarker(this.state.x, this.state.y, this.state.func);
+                this.visualizer.draw2D(this.state.x, this.state.y, this.state.func, this.visualizer.trajectory);
+                this.updateMetrics();
+                document.getElementById('status-display').innerText = "Reset";
+            }
+
+            randomize() {
+                this.stop();
+                this.optimizer.reset();
+                this.state.stepCount = 0;
+                const range = MathEngine.getRange(this.state.func);
+                this.state.x = (Math.random() - 0.5) * (range.x[1] - range.x[0]) * 0.8;
+                this.state.y = (Math.random() - 0.5) * (range.y[1] - range.y[0]) * 0.8;
+                
+                this.visualizer.resetData();
+                this.visualizer.trajectory = [{x: this.state.x, y: this.state.y}];
+                this.visualizer.updateMarker(this.state.x, this.state.y, this.state.func);
+                this.visualizer.draw2D(this.state.x, this.state.y, this.state.func, this.visualizer.trajectory);
+                this.updateMetrics();
+                document.getElementById('status-display').innerText = "Randomized";
+            }
+
+            updateMetrics(loss = null, grad = null) {
+                if (loss === null) loss = MathEngine.getLoss(this.state.func, this.state.x, this.state.y);
+                if (grad === null) grad = MathEngine.getGradient(this.state.func, this.state.x, this.state.y);
+
+                const gradNorm = Math.sqrt(grad.dx*grad.dx + grad.dy*grad.dy);
+                const min = MathEngine.getMin(this.state.func);
+                const dist = Math.sqrt(Math.pow(this.state.x - min.x, 2) + Math.pow(this.state.y - min.y, 2));
+
+                document.getElementById('metric-loss').innerText = loss.toFixed(4);
+                document.getElementById('metric-step').innerText = this.state.stepCount;
+                document.getElementById('metric-grad').innerText = gradNorm.toFixed(4);
+                document.getElementById('metric-dist').innerText = dist.toFixed(4);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            new App();
+        });
+    </script>
+</body>
+</html>
+
