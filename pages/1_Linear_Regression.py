@@ -1,7 +1,7 @@
 import streamlit as st
 from pathlib import Path
 
-st.set_page_config(page_title="Linear Regression", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Linear Regression | Interactive ML Visualization", page_icon="📈", layout="wide")
 
 st.html("""
 <link rel="preconnect" href="https://fonts.googleapis.com">

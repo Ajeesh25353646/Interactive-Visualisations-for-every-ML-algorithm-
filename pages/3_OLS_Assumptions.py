@@ -1,7 +1,7 @@
 import streamlit as st
 from pathlib import Path
 
-st.set_page_config(page_title="OLS Assumptions Diagnostic", page_icon="🔬", layout="wide")
+st.set_page_config(page_title="OLS Assumptions Diagnostic | Interactive Q-Q Plots, VIF & More", page_icon="🔬", layout="wide")
 
 st.html("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
